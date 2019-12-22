@@ -2,6 +2,8 @@ const express = require('express');
 require('express-group-routes');
 const categoriesController = require('./controllers/categories');
 const articlesController = require('./controllers/articles');
+const authController = require('./controllers/auth');
+const middleware = require('./middleware');
 
 const app = express();
 const port = 3001;
@@ -23,16 +25,18 @@ app.group('/api/v1', (router) => {
 	router.get('/articles', articlesController.index);
 
 	//get articles by category
-	router.get('/articles/:id/category', articlesController.showArticlesByCategory);
+	router.get('/category/:id/articles', articlesController.showArticlesByCategory);
 
 	//get lastest articles
 	router.get('/articles/lastest', articlesController.lastArticles);
 	//post article
-	router.post('/article', articlesController.addArticle);
+	router.post('/article', middleware.checkAuth, articlesController.addArticle);
 	//update article
-	router.patch('/article/:id', articlesController.updateArticle);
+	router.patch('/article/:id', middleware.checkAuth, articlesController.updateArticle);
 	//delete article
-	router.delete('/article/:id', articlesController.deleteArticle);
+	router.delete('/article/:id', middleware.checkAuth, articlesController.deleteArticle);
+
+	router.post('/login', authController.login);
 });
 
 app.listen(port, () => console.log(`Run on port ${port}`));
