@@ -25,7 +25,7 @@ exports.login = (req, res) => {
 					const token = jwt.sign({ userId: user.id }, 'asep');
 					if (token) {
 						res.status(200).json({
-							message: 'Succes',
+							message: 'Success',
 							data: {
 								email,
 								token
