@@ -46,25 +46,23 @@ exports.login = (req, res) => {
 		});
 };
 
-// if (user) {
-// 	if (user.is_active != 1) {
-// 		res.send({
-// 			message: "Your account isn't activated!",
-// 			data: {}
-// 		});
-// 	} else {
-// 		const token = jwt.sign({ userId: user.id }, 'asep');
-// 		res.send({
-// 			message: 'Success',
-// 			data: {
-// 				email,
-// 				token
-// 			}
-// 		});
-// 	}
-// } else {
-// 	res.send({
-// 		message: 'Email atau Password Salah',
-// 		data: {}
-// 	});
-// }
+exports.register = (req, res) => {
+	const { fullname, username, email, password } = req.body;
+
+	User.create({
+		fullname: fullname,
+		username: username,
+		email: email,
+		password: password,
+		is_active: 0
+	}).then((data) => {
+		const token = jwt.sign({ userId: User.id }, 'asep');
+		res.send({
+			message: 'success',
+			data: {
+				email,
+				token
+			}
+		});
+	});
+};

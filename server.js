@@ -37,6 +37,7 @@ app.group('/api/v1', (router) => {
 	router.delete('/article/:id', middleware.checkAuth, articlesController.deleteArticle);
 
 	router.post('/login', authController.login);
+	router.post('/register', authController.register);
 });
 
 app.listen(port, () => console.log(`Run on port ${port}`));
