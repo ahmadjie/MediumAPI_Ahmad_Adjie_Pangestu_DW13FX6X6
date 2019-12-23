@@ -2,6 +2,7 @@ const express = require('express');
 require('express-group-routes');
 const categoriesController = require('./controllers/categories');
 const articlesController = require('./controllers/articles');
+const commentsController = require('./controllers/comments');
 const authController = require('./controllers/auth');
 const middleware = require('./middleware');
 
@@ -36,6 +37,12 @@ app.group('/api/v1', (router) => {
 	router.patch('/article/:id', middleware.checkAuth, articlesController.updateArticle);
 	//delete article
 	router.delete('/article/:id', middleware.checkAuth, articlesController.deleteArticle);
+
+	//comments
+	router.get('/article/:id/comment', commentsController.getAllComments);
+	router.post('/article/:id/comment', middleware.checkAuth, commentsController.addComment);
+	router.put('/article/:id/comment', middleware.checkAuth, commentsController.editComment);
+	router.delete('/article/:id/comment', middleware.checkAuth, commentsController.deleteComment);
 
 	//login & register
 	router.post('/login', authController.login);

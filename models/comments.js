@@ -13,7 +13,7 @@ module.exports = (sequelize, DataTypes) => {
 		// associations can be defined here
 		comments.belongsTo(models.articles, {
 			foreignKey: 'idArticle',
-			as: 'comments',
+			as: 'articles',
 			sourceKey: 'id'
 		});
 	};
