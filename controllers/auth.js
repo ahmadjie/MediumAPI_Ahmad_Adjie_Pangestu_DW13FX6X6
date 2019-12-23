@@ -6,9 +6,6 @@ exports.login = (req, res) => {
 	const { email, password } = req.body;
 
 	User.findOne({
-		attributes: {
-			exclude: [ 'createdAt', 'updatedAt', 'password', 'bio' ]
-		},
 		where: {
 			email,
 			password

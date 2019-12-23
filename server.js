@@ -23,6 +23,7 @@ app.group('/api/v1', (router) => {
 
 	//get all articles
 	router.get('/articles', articlesController.index);
+	router.get('/article/:id', articlesController.showArticleById);
 
 	//get articles by category
 	router.get('/category/:id/articles', articlesController.showArticlesByCategory);
@@ -36,6 +37,7 @@ app.group('/api/v1', (router) => {
 	//delete article
 	router.delete('/article/:id', middleware.checkAuth, articlesController.deleteArticle);
 
+	//login & register
 	router.post('/login', authController.login);
 	router.post('/register', authController.register);
 });

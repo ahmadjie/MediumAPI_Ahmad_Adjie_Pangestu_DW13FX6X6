@@ -2,6 +2,7 @@ const Model = require('../models');
 const Articles = Model.articles;
 const Category = Model.categories;
 const User = Model.users;
+const Comments = Model.comments;
 
 //show all articles
 exports.index = (req, res) => {
@@ -57,7 +58,15 @@ exports.lastArticles = (req, res) => {
 
 //add article
 exports.addArticle = (req, res) => {
-	Articles.create(req.body).then((data) =>
+	const { title, content, image, idCategory } = req.body;
+	Articles.create({
+		title: title,
+		content: content,
+		image: image,
+		idCategory: idCategory,
+		//tokenUserId dapet dari middleware
+		idUser: tokenUserId
+	}).then((data) =>
 		res.send({
 			message: 'success',
 			data
@@ -108,6 +117,9 @@ exports.showArticlesByCategory = (req, res) => {
 				as: 'Category',
 				attributes: {
 					exclude: [ 'createdAt', 'updatedAt' ]
+				},
+				where: {
+					id
 				}
 			},
 			{
@@ -115,6 +127,42 @@ exports.showArticlesByCategory = (req, res) => {
 				as: 'Created By',
 				attributes: {
 					exclude: [ 'id', 'fullname', 'email', 'password', 'is_active', 'createdAt', 'updatedAt' ]
+				}
+			}
+		]
+	}).then((data) => res.send(data));
+};
+
+//show article by id
+exports.showArticleById = (req, res) => {
+	const { id } = req.params;
+	Articles.findOne({
+		where: {
+			id
+		},
+		attributes: {
+			exclude: [ 'createdAt', 'updatedAt', 'idCategory', 'idUser' ]
+		},
+		include: [
+			{
+				model: Category,
+				as: 'Category',
+				attributes: {
+					exclude: [ 'createdAt', 'updatedAt' ]
+				}
+			},
+			{
+				model: User,
+				as: 'Created By',
+				attributes: {
+					exclude: [ 'id', 'fullname', 'email', 'password', 'is_active', 'createdAt', 'updatedAt' ]
+				}
+			},
+			{
+				model: Comments,
+				as: 'comments',
+				attributes: {
+					exclude: [ 'idUser', 'idArticle' ]
 				}
 			}
 		]
