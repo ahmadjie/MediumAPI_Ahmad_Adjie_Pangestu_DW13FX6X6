@@ -4,6 +4,7 @@ const categoriesController = require('./controllers/categories');
 const articlesController = require('./controllers/articles');
 const commentsController = require('./controllers/comments');
 const authController = require('./controllers/auth');
+const followController = require('./controllers/follows');
 const middleware = require('./middleware');
 
 const app = express();
@@ -43,6 +44,9 @@ app.group('/api/v1', (router) => {
 	router.post('/article/:id/comment', middleware.checkAuth, commentsController.addComment);
 	router.put('/article/:id/comment', middleware.checkAuth, commentsController.editComment);
 	router.delete('/article/:id/comment', middleware.checkAuth, commentsController.deleteComment);
+
+	//follows
+	router.post('/follow', middleware.checkAuth, followController.addFollow);
 
 	//login & register
 	router.post('/login', authController.login);

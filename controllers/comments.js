@@ -1,7 +1,5 @@
 const Model = require('../models');
 const Articles = Model.articles;
-const Category = Model.categories;
-const User = Model.users;
 const Comment = Model.comments;
 
 exports.addComment = (req, res) => {
