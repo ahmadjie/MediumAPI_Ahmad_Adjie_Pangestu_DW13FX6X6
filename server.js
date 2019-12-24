@@ -5,6 +5,7 @@ const articlesController = require('./controllers/articles');
 const commentsController = require('./controllers/comments');
 const authController = require('./controllers/auth');
 const followController = require('./controllers/follows');
+const userController = require('./controllers/users');
 const middleware = require('./middleware');
 
 const app = express();
@@ -47,6 +48,9 @@ app.group('/api/v1', (router) => {
 
 	//follows
 	router.post('/follow', middleware.checkAuth, followController.addFollow);
+
+	//users
+	router.get('/user/:id/articles', userController.findArticlesByUser);
 
 	//login & register
 	router.post('/login', authController.login);

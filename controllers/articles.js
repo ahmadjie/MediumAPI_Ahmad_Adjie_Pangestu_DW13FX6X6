@@ -77,30 +77,76 @@ exports.addArticle = (req, res) => {
 //update article
 exports.updateArticle = (req, res) => {
 	const { id } = req.params;
-	Articles.update(req.body, {
-		where: {
-			id
-		}
+	const dataUpdate = {
+		title: req.body.title,
+		content: req.body.content,
+		image: req.body.image,
+		idCategory: req.body.idCategory
+	};
+	Articles.findAll({
+		where: { idUser: tokenUserId }
 	}).then((data) => {
-		res.send({
-			message: 'Success Update Article',
-			data
-		});
+		if (data) {
+			Articles.update(dataUpdate, {
+				where: {
+					id: id,
+					idUser: tokenUserId
+				}
+			})
+				.then((data) => {
+					if (data[0] === 1) {
+						res.status(200).send({
+							message: 'Success Update Article',
+							data
+						});
+					} else {
+						res.status(403).send({
+							message: 'This is not your article'
+						});
+					}
+				})
+				.catch((err) => {
+					res.send({
+						message: err.message
+					});
+				});
+		} else {
+			res.status(403).send({
+				message: 'This is not your articles'
+			});
+		}
 	});
 };
 
 //delete article
 exports.deleteArticle = (req, res) => {
 	const { id } = req.params;
-	Articles.destroy({
-		where: {
-			id
-		}
+	Articles.findAll({
+		where: { idUser: tokenUserId }
 	}).then((data) => {
-		res.send({
-			message: 'Delete Succes',
-			data
-		});
+		if (data) {
+			Articles.destroy({
+				where: {
+					id: id,
+					idUser: tokenUserId
+				}
+			}).then((data) => {
+				if (data === 1) {
+					res.status(200).send({
+						message: 'Success Delete Article',
+						data
+					});
+				} else {
+					res.status(403).send({
+						message: 'This is not your article'
+					});
+				}
+			});
+		} else {
+			res.status(403).send({
+				message: 'This is not your article Article'
+			});
+		}
 	});
 };
 
