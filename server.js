@@ -15,43 +15,41 @@ const bodyParser = require('body-parser');
 app.use(bodyParser.json());
 
 app.group('/api/v1', (router) => {
+	//task1
 	//get all categories
 	router.get('/categories', categoriesController.index);
-
-	//get category by id
-	router.get('/category/:id', categoriesController.showCategory);
-
 	//post category
 	router.post('/category', categoriesController.addCategory);
-
+	//get category by id
+	router.get('/category/:id', categoriesController.showCategory);
+	//task2
 	//get all articles
 	router.get('/articles', articlesController.index);
-	router.get('/article/:id', articlesController.showArticleById);
-
-	//get articles by category
-	router.get('/category/:id/articles', articlesController.showArticlesByCategory);
-
 	//get lastest articles
 	router.get('/articles/lastest', articlesController.lastArticles);
-	//post article
+	//task3
+	//get articles by category
+	router.get('/category/:id/articles', articlesController.showArticlesByCategory);
+	//task4
+	//create update delete article
 	router.post('/article', middleware.checkAuth, articlesController.addArticle);
-	//update article
 	router.patch('/article/:id', middleware.checkAuth, articlesController.updateArticle);
-	//delete article
 	router.delete('/article/:id', middleware.checkAuth, articlesController.deleteArticle);
-
-	//comments
+	//task 5
+	router.get('/article/:id', articlesController.showArticleById);
+	//task6
+	// crud comments
 	router.get('/article/:id/comment', commentsController.getAllComments);
 	router.post('/article/:id/comment', middleware.checkAuth, commentsController.addComment);
 	router.put('/article/:id/comment', middleware.checkAuth, commentsController.editComment);
 	router.delete('/article/:id/comment', middleware.checkAuth, commentsController.deleteComment);
-
+	//task 7
 	//follows
-	router.post('/follow', middleware.checkAuth, followController.addFollow);
-
+	router.get('/follow', middleware.checkAuth, followController.addFollow);
+	//task 9
 	//users
 	router.get('/user/:id/articles', userController.findArticlesByUser);
-
+	//task 10 & 11
 	//login & register
 	router.post('/login', authController.login);
 	router.post('/register', authController.register);

@@ -2,7 +2,6 @@ const Model = require('../models');
 const Articles = Model.articles;
 const Category = Model.categories;
 const User = Model.users;
-const Comments = Model.comments;
 
 exports.findArticlesByUser = (req, res) => {
 	const { id } = req.params;

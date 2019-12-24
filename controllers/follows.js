@@ -26,9 +26,6 @@ exports.addFollow = (req, res) => {
 					message: result
 				});
 			});
-			// res.send({
-			// 	message: data
-			// });
 		});
 	} else {
 		res.send({
