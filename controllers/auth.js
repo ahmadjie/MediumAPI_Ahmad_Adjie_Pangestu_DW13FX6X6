@@ -3,11 +3,11 @@ const model = require('../models');
 const User = model.users;
 
 exports.login = (req, res) => {
-	const { email, password } = req.body;
+	const { username, password } = req.body;
 
 	User.findOne({
 		where: {
-			email,
+			username,
 			password
 		}
 	})
@@ -24,7 +24,7 @@ exports.login = (req, res) => {
 						res.status(200).json({
 							message: 'Success',
 							data: {
-								email,
+								username,
 								token
 							}
 						});
@@ -32,7 +32,7 @@ exports.login = (req, res) => {
 				}
 			} else {
 				res.status(403).json({
-					message: 'Email Password Anda Salah'
+					message: 'username Password Anda Salah'
 				});
 			}
 		})
@@ -57,7 +57,7 @@ exports.register = (req, res) => {
 		res.send({
 			message: 'success',
 			data: {
-				email,
+				username,
 				token
 			}
 		});
