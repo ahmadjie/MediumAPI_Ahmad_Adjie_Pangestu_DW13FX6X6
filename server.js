@@ -7,12 +7,13 @@ const authController = require('./controllers/auth');
 const followController = require('./controllers/follows');
 const userController = require('./controllers/users');
 const middleware = require('./middleware');
-
+const cors = require('cors');
 const app = express();
 const port = 3001;
 
 const bodyParser = require('body-parser');
 app.use(bodyParser.json());
+app.use(cors());
 
 app.group('/api/v1', (router) => {
 	//task1

@@ -20,7 +20,7 @@ exports.index = (req, res) => {
 			},
 			{
 				model: User,
-				as: 'Created By',
+				as: 'Created_By',
 				attributes: {
 					exclude: [ 'id', 'fullname', 'email', 'password', 'is_active', 'createdAt', 'updatedAt' ]
 				}
@@ -45,14 +45,14 @@ exports.lastArticles = (req, res) => {
 			},
 			{
 				model: User,
-				as: 'Created By',
+				as: 'Created_By',
 				attributes: {
 					exclude: [ 'id', 'fullname', 'email', 'password', 'is_active', 'createdAt', 'updatedAt' ]
 				}
 			}
 		],
 		order: [ [ 'createdAt', 'DESC' ] ],
-		limit: 10
+		limit: 4
 	}).then((data) => res.send(data));
 };
 
@@ -170,7 +170,7 @@ exports.showArticlesByCategory = (req, res) => {
 			},
 			{
 				model: User,
-				as: 'Created By',
+				as: 'Created_By',
 				attributes: {
 					exclude: [ 'id', 'fullname', 'email', 'password', 'is_active', 'createdAt', 'updatedAt' ]
 				}
@@ -187,7 +187,7 @@ exports.showArticleById = (req, res) => {
 			id
 		},
 		attributes: {
-			exclude: [ 'createdAt', 'updatedAt', 'idCategory', 'idUser' ]
+			exclude: [ 'updatedAt', 'idCategory', 'idUser' ]
 		},
 		include: [
 			{
@@ -199,7 +199,7 @@ exports.showArticleById = (req, res) => {
 			},
 			{
 				model: User,
-				as: 'Created By',
+				as: 'Created_By',
 				attributes: {
 					exclude: [ 'id', 'fullname', 'email', 'password', 'is_active', 'createdAt', 'updatedAt' ]
 				}

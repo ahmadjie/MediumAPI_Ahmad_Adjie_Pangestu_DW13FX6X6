@@ -21,7 +21,7 @@ module.exports = (sequelize, DataTypes) => {
 		});
 		articles.belongsTo(models.users, {
 			foreignKey: 'idUser',
-			as: 'Created By',
+			as: 'Created_By',
 			sourceKey: 'id'
 		});
 		articles.hasMany(models.comments, { foreignKey: 'idArticle' });

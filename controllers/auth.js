@@ -3,11 +3,11 @@ const model = require('../models');
 const User = model.users;
 
 exports.login = (req, res) => {
-	const { username, password } = req.body;
+	const { email, password } = req.body;
 
 	User.findOne({
 		where: {
-			username,
+			email,
 			password
 		}
 	})
@@ -24,7 +24,7 @@ exports.login = (req, res) => {
 						res.status(200).json({
 							message: 'Success',
 							data: {
-								username,
+								email,
 								token
 							}
 						});
@@ -32,7 +32,7 @@ exports.login = (req, res) => {
 				}
 			} else {
 				res.status(403).json({
-					message: 'username Password Anda Salah'
+					message: 'email Password Anda Salah'
 				});
 			}
 		})
